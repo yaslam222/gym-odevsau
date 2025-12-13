@@ -1,0 +1,190 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Api Otel </title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="~/quixlab-master/quixlab-master/images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link href="~/quixlab-master/quixlab-master/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+
+
+    <div id="main-wrapper">
+
+
+        <div class="nav-header">
+            <div class="brand-logo">
+                <a href="index.html">
+                    <b class="logo-abbr"><img src="~/quixlab-master/quixlab-master/images/logo.png" alt=""> </b>
+                    <span class="logo-compact"><img src="~/quixlab-master/quixlab-master/images/logo-compact.png" alt=""></span>
+                    <span class="brand-title">
+                        <img src="~/quixlab-master/quixlab-master/images/logo-text.png" alt="">
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <div class="header">
+            <div class="header-content clearfix">
+
+                <div class="nav-control">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                </div>
+            
+                <div class="header-right">
+                    <ul class="clearfix">
+                        <li class="icons dropdown">
+                            <a href="javascript:void(0)" data-toggle="dropdown">
+                             
+                            
+                            </a>
+                          
+                        </li>
+                      
+                    
+                        <li class="icons dropdown">
+                            <div class="user-img c-pointer position-relative" data-toggle="dropdown">
+                                <span class="activity active"></span>
+                                <img src="~/quixlab-master/quixlab-master/images/user/1.png" height="40" width="40" alt="">
+                            </div>
+                            <div class="drop-down dropdown-profile   dropdown-menu">
+                                <div class="dropdown-content-body">
+                                    <ul>
+                                      
+                                       
+
+                                       
+                                        
+                                        <li>
+                                            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                                <button id="logout" type="submit" class="btn btn-primary btn-join-now text-uppercase custom-font-weight-medium">Logout</button>
+                                            </form>
+                                        </li>
+                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="nk-sidebar">
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li>
+                        <a href="/Home/Index/" aria-expanded="false">
+                            <i class="icon-plane menu-icon"></i><span class="nav-text"> go to web site</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" aria-expanded="false">
+                            <i class="icon-magic-wand menu-icon"></i><span class="nav-text"> Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="AdminTrainers" asp-action="Index" aria-expanded="false">
+                            <i class="icon-people menu-icon"></i><span class="nav-text">Trainers</span>
+                        </a>
+                    </li>
+                   
+                    <li>
+                        <a asp-area="Admin" asp-controller="AdminClasses" asp-action="Index" aria-expanded="false">
+                            <i class="icon-layers menu-icon"></i><span class="nav-text">Classes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="AdminAppointment" asp-action="Index" aria-expanded="false">
+                            <i class="fa-regular fa-bookmark"></i><span class="nav-text">Appointment</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="AdminAvailable" asp-action="Index" aria-expanded="false">
+                            <i class="icon-clock menu-icon"></i> <span class="nav-text">Availablete</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="AdminPrice" asp-action="Index" aria-expanded="false">
+                            <i class="icon-badge menu-icon"></i><span class="nav-text">Price Plane</span>
+                        </a>
+                    </li>
+               
+                
+                  
+                    <li>
+                        <a asp-area="Admin" asp-controller="AdminContact" asp-action="Index" aria-expanded="false">
+                            <i class="icon-notebook menu-icon"></i><span class="nav-text">Messages</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="AdminViptrial" asp-action="Index" aria-expanded="false">
+                            <i class="icon-notebook menu-icon"></i><span class="nav-text">VIP Messages</span>
+                        </a>
+                    </li>
+            
+                   
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="content-body">
+
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                @RenderBody()
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+        <br />
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+            </div>
+        </div>
+
+    </div>
+    <script src="~/quixlab-master/quixlab-master/plugins/common/common.min.js"></script>
+    <script src="~/quixlab-master/quixlab-master/js/custom.min.js"></script>
+    <script src="~/quixlab-master/quixlab-master/js/settings.js"></script>
+    <script src="~/quixlab-master/quixlab-master/js/gleek.js"></script>
+    <script src="~/quixlab-master/quixlab-master/js/styleSwitcher.js"></script>
+
+
+</body>
+
+</html>
+

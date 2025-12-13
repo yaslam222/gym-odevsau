@@ -1,0 +1,92 @@
+﻿@using SporSalonuProjesi.Areas.Admin.Models 
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-lg-4 col-sm-6">
+        <div class="card gradient-3">
+            <div class="card-body">
+                <h3 class="card-title text-white">Toplam Üye</h3>
+                <div class="d-inline-block">
+                    <h2 class="text-white">@Model.MemberCount</h2>
+                    <p class="text-white mb-0">Kayıtlı Kullanıcılar</p>
+                </div>
+                <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6">
+        <div class="card gradient-1">
+            <div class="card-body">
+                <h3 class="card-title text-white">Toplam Antrenör</h3>
+                <div class="d-inline-block">
+                    <h2 class="text-white">@Model.TrainerCount</h2>
+                    <p class="text-white mb-0">Aktif Antrenörler</p>
+                </div>
+                <span class="float-right display-5 opacity-5"><i class="fa fa-user-tie"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6">
+        <div class="card gradient-2">
+            <div class="card-body">
+                <h3 class="card-title text-white">Toplam Ders</h3>
+                <div class="d-inline-block">
+                    <h2 class="text-white">@Model.ClassCount</h2>
+                    <p class="text-white mb-0">Açılan Sınıflar</p>
+                </div>
+                <span class="float-right display-5 opacity-5"><i class="fa fa-calendar-alt"></i></span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-lg-4 col-sm-6">
+        <div class="card gradient-4">
+            <div class="card-body">
+                <h3 class="card-title text-white">Gelen Mesajlar</h3>
+                <div class="d-inline-block">
+                    <h2 class="text-white">@Model.MessageCount</h2>
+                    <p class="text-white mb-0">İletişim Formu</p>
+                </div>
+                <span class="float-right display-5 opacity-5"><i class="fa fa-envelope"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6">
+        <div class="card gradient-1">
+            <div class="card-body">
+                <h3 class="card-title text-white">Toplam Randevu</h3>
+                <div class="d-inline-block">
+                    <h2 class="text-white">@Model.TotalAppointmentCount</h2>
+                    <p class="text-white mb-0">Alınan Tüm Randevular</p>
+                </div>
+                <span class="float-right display-5 opacity-5"><i class="fa fa-calendar-check-o"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6">
+        <div class="card gradient-2">
+            <div class="card-body">
+                <h3 class="card-title text-white">Onaylı Randevu</h3>
+                <div class="d-inline-block">
+                    <h2 class="text-white">@Model.ApprovedAppointmentCount</h2>
+                    <p class="text-white mb-0">Onaylanan Randevular</p>
+                </div>
+                <span class="float-right display-5 opacity-5"><i class="fa fa-check"></i></span>
+            </div>
+        </div>
+    </div>
+
+</div>
