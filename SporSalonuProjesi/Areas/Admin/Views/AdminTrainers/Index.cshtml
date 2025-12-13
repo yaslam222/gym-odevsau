@@ -1,0 +1,57 @@
+﻿@using SporSalonuProjesi.Data.Entities
+@model List<Trainer>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    int counter = 1;
+}
+
+<h5>Trainers</h5>
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Title</th>
+        <th>Img</th>
+        <th>Bio</th>
+        <th>Speciality</th>
+        <th>Description</th>
+        <th>Delete</th>
+        <th>Edit</th>
+
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@counter</td>
+            <td>@item.FullName</td>
+            <td>@item.Title</td>
+            <td style="width: 120px;">
+                <img src="@Url.Content(item.ProfileImageUrl)"
+                     style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;"
+                     alt="Trainer Image" />
+            </td>
+            <td>@item.Bio</td>
+            <td>@item.Skills</td>
+            <td>@item.Speciality</td>
+            <td>@item.Description</td>
+
+            <td>
+                <a asp-area="Admin" asp-action="Delete" asp-controller="AdminTrainers" asp-route-id="@item.Id" class="btn mb-1 btn-rounded btn-outline-danger">Delete</a>
+
+            </td>
+            <td>
+                <a asp-area="Admin" asp-action="Edit" asp-controller="AdminTrainers" asp-route-id="@item.Id" class="btn mb-1 btn-rounded btn-outline-primary">Edit</a>
+
+            </td>
+
+
+        </tr>
+        counter++;
+    }
+
+</table>
+
+<a asp-area="Admin"asp-action="Create" asp-controller="AdminTrainers" class="btn btn-info">Create New Trainer</a>
+

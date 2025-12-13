@@ -1,0 +1,78 @@
+﻿@using SporSalonuProjesi.Data.Entities
+@model List<Appointment>
+@{
+    ViewData["Title"] = "Appointments";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    int counter = 1;
+}
+
+<h5>@ViewData["Title"]</h5>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Member</th>
+            <th>Trainer</th>
+            <th>Class</th>
+            <th>Date & Time</th>
+            <th>Duration (Min)</th>
+            <th>Fee</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@counter</td>
+                <td>@(item.Member?.UserName)</td>
+                <td>@(item.Trainer?.FullName)</td>
+                <td>@(item.GymClass?.Name)</td>
+                <td>@item.AppointmentDateTime.ToString("g")</td>
+                <td>@item.DurationMinutes</td>
+                <td>@item.Fee.ToString("C")</td>
+
+                <td>
+                    @if (item.Status == BookingStatus.Approved)
+                    {
+                        <span class="badge badge-success">Approved</span>
+                    }
+                    else if (item.Status == BookingStatus.Pending)
+                    {
+                        <form asp-action="ApproveBooking" asp-controller="AdminAppointment" asp-area="Admin" asp-route-id="@item.Id" method="post" style="display: inline-block;">
+                            <button type="submit" class="btn btn-sm btn-outline-warning">
+                                Approve
+                            </button>
+                        </form>
+
+                        <form asp-action="RejectBooking" asp-controller="AdminAppointment" asp-area="Admin" asp-route-id="@item.Id" method="post" style="display: inline-block;">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                Reject
+                            </button>
+                        </form>
+                    }
+                    else if (item.Status == BookingStatus.Rejected)
+                    {
+                        <span class="badge badge-danger">Rejected</span>
+                    }
+                </td>
+
+                <td>
+                    @if (item.Status == BookingStatus.Approved)
+                    {
+                        <form asp-action="Unapprove" asp-controller="AdminAppointment" asp-area="Admin" asp-route-id="@item.Id" method="post" style="display: inline-block;">
+                            <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                Revoke
+                            </button>
+                        </form>
+                    }
+
+                    <a asp-action="Delete" asp-controller="AdminAppointment" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger" style="margin-left: 5px;">Delete</a>
+                </td>
+            </tr>
+            counter++;
+        }
+    </tbody>
+</table>

@@ -1,0 +1,47 @@
+﻿@using SporSalonuProjesi.Data.Entities
+@model Trainer
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form method="post" asp-area="Admin" asp-action="Edit" asp-controller="AdminTrainers">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="FullName">Trainer Name</label>
+        <input asp-for="FullName" class="form-control" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Title">Title</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ProfileImageUrl">Room Price</label>
+        <input asp-for="ProfileImageUrl" class="form-control" />
+        <span asp-validation-for="ProfileImageUrl" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Bio">Bio</label>
+        <input asp-for="Bio" class="form-control" />
+        <span asp-validation-for="Bio" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Skills">Skills</label>
+        <input asp-for="Skills" class="form-control" />
+        <span asp-validation-for="Skills" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Speciality">Speciality</label>
+        <input asp-for="Speciality" class="form-control" />
+        <span asp-validation-for="Speciality" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description">Description</label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+ 
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
