@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewData["Title"] = "Detail";
+}
+
+@model SporSalonuProjesi.Data.Entities.Trainer
+
+
+<div role="main" class="main">
+    <section class="section section-no-border section-light custom-padding-top-1 mb-0">
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-md-8 col-lg-9">
+                    <div class="pe-4">
+                        <!-- İsim ve Unvan veritabanından -->
+                        <h1 class="font-weight-bold text-color-primary mb-0">@Model.FullName</h1>
+                        <h4 class="font-weight-bold text-color-quaternary">@Model.Title</h4>
+
+                        <!-- Bio veritabanından -->
+                        <p>@Model.Bio</p>
+                        <p class="text-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquet laoreet lorem, a imperdiet sapien tincidunt at. Vivamus sed libero ut diam feugiat sagittis sit amet in justo. Nam quis massa nec lorem tempus egestas at quis eros.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3 position-relative">
+                    <!-- Ana Resim veritabanından -->
+                    <img src="@Url.Content(Model.ProfileImageUrl)" alt="@Model.FullName" class="img-fluid bg-color-primary p-3" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-quaternary section-text-light m-0">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h4 class="font-weight-bold text-color-light">Skills</h4>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <!--
+                  DİNAMİK YETENEK LİSTESİ
+                  SQL'deki "Fitness, Cardio, Weightloss" metnini virgüllerden ayırıp listeliyoruz
+                -->
+                @if (!string.IsNullOrEmpty(Model.Skills))
+                {
+                    var skills = Model.Skills.Split(',');
+                    <div class="col-md-6">
+                        <ul class="list list-icons list-light text-color-light">
+                            @foreach (var skill in skills)
+                            {
+                                <li><i class="fas fa-check"></i> @skill.Trim()</li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                <div class="col-md-6">
+                    <h4 class="font-weight-bold text-color-light">Availability</h4>
+                    <ul class="list list-icons list-light text-color-light">
+                        <!-- Müsaitlik (Availabilities) listesi veritabanından -->
+                        @foreach (var availability in Model.Availabilities)
+                        {
+                            <li>
+                                <i class="fas fa-check"></i>
+                                @availability.Day.ToString():
+                                @availability.StartTime.ToString(@"hh\:mm") - @availability.EndTime.ToString(@"hh\:mm")
+                            </li>
+                        }
+                        @if (!Model.Availabilities.Any())
+                        {
+                            <li><i class="fas fa-times"></i> Availability not set.</li>
+                        }
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-center section-no-border section-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <h2 class="font-weight-bold text-color-quaternary appear-animation" data-appear-animation="fadeInUp" data-appear-animation-delay="0"><span class="text-color-primary">Get Up!</span> Challenge yourself today</h2>
+                    <p class="appear-animation" data-appear-animation="fadeInUp" data-appear-animation-delay="150">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed sem ipsum. Proin efficitur dolor accumsan purus varius tempus nec a nulla. Aliquam id vulputate massa, a rhoncus justo. Nunc luctus non ipsum a cursus. Donec laoreet iaculis egestas. Nulla finibus sed ipsum a pretium. Mauris ut nisl nec metus.</p>
+                    <a class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium text-2 appear-animation" data-appear-animation="fadeInUp" data-appear-animation-delay="300"
+                       asp-controller="AboutUs" asp-action="Index">About the Gym</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+

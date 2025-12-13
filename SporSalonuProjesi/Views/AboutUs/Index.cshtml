@@ -1,0 +1,174 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+}
+<div role="main" class="main">
+
+    <section class="section section-no-border section-light custom-padding-top-1">
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-md-7 col-lg-9">
+                    <h1 class="font-weight-bold text-color-primary mb-0">About Us</h1>
+                    <h4 class="font-weight-bold text-color-quaternary">Challenge yourself today</h4>
+                  <p>We are more than just a gym; we are a community built on the belief that fitness can transform lives. Our mission is to provide a positive, supportive, and energetic environment. We are dedicated to helping every member, regardless of their starting point, discover their strength, build confidence, and achieve their personal health and wellness goals.</p>
+<p class="text-1">Founded on the principle of offering a truly premium experience, we've invested in state-of-the-art equipment and designed our space to be both functional and inspiring. From our diverse group classes to our dedicated personal training zones, every detail is crafted for your journey. Our passionate team is committed to maintaining the highest standards of cleanliness and providing the expert support you need to thrive.</p>
+                    <!-- VIP Formu Başarı Mesajı -->
+                    @if (TempData["VipSuccess"] != null)
+                    {
+                        <div class="alert alert-success mt-4">
+                            <strong>Success!</strong> @TempData["VipSuccess"]
+                        </div>
+                    }
+                </div>
+                <div class="col-md-5 col-lg-3">
+                    <!-- 'Try us Out!' VIP FORMU -->
+                    <div class="custom-join-now-form custom-position-style-1 bg-color-primary p-4">
+                        <h4 class="font-weight-bold text-color-light mb-0">Try us Out!</h4>
+                        <p class="font-weight-light text-color-light text-2">Get a free 5 day VIP guest pass.</p>
+
+                        <!-- Formu HomeController -> VipRequest metoduna gönder -->
+                        <form asp-controller="VipRequest" asp-action="Submit" method="POST">
+                            <div class="row">
+                                <div class="form-group col">
+                                    <input type="text" value="" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="Name" placeholder="Your Name" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <input type="email" value="" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="Email" placeholder="Your E-mail" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <input type="text" value="" data-msg-required="Please enter your phone." maxlength="100" class="form-control" name="Phone" placeholder="Your Phone" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col mb-0">
+                                    <input type="submit" value="Join Now!" class="btn btn-quaternary custom-btn-style-2 font-weight-bold" data-loading-text="Loading...">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Paralaks arka plan yolu ~/ ile düzeltildi -->
+    <section class="parallax section section-text-light section-parallax m-0" data-plugin-parallax data-plugin-options="{'speed': 1.5}" data-image-src="@Url.Content("~/about-us-parallax-1.jpg")">
+        <div class="container">
+            <div class="row justify-content-end">
+                <div class="col-lg-6">
+                    <h2 class="font-weight-bold text-color-light">Why Us?</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list list-icons list-light text-color-light">
+                                <li><i class="fas fa-check"></i> Fitness Consultation</li>
+                                <li><i class="fas fa-check"></i> Professionals</li>
+                                <li><i class="fas fa-check"></i> Zumba</li>
+                                <li><i class="fas fa-check"></i> Nutrition</li>
+                                <li><i class="fas fa-check"></i> TRX</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list list-icons list-light text-color-light">
+                                <li><i class="fas fa-check"></i> Conditioning</li>
+                                <li><i class="fas fa-check"></i> Sports</li>
+                                <li><i class="fas fa-check"></i> Consultation</li>
+                                <li><i class="fas fa-check"></i> Spin</li>
+                                <li><i class="fas fa-check"></i> Full Cardio</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resim galerisi (lightbox) yolları ~/ ile düzeltildi -->
+    <div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+        <div class="owl-carousel custom-arrows-style-1" data-plugin-options="{'items': 5, 'loop': false, 'dots': false, 'nav': true}">
+            <div>
+                <a href="~/about-us-carousel-1.jpg" class="lightbox text-decoration-none">
+                    <span class="thumb-info custom-thumb-info-1">
+                        <span class="thumb-info-wrapper">
+                            <span class="thumb-info-plus"></span>
+                            <img src="~/about-us-carousel-1.jpg" class="img-fluid" alt="">
+                        </span>
+                    </span>
+                </a>
+            </div>
+            <div>
+                <a href="~/about-us-carousel-2.jpg" class="lightbox text-decoration-none">
+                    <span class="thumb-info custom-thumb-info-1">
+                        <span class="thumb-info-wrapper">
+                            <span class="thumb-info-plus"></span>
+                            <img src="~/about-us-carousel-2.jpg" class="img-fluid" alt="">
+                        </span>
+                    </span>
+                </a>
+            </div>
+            <div>
+                <a href="~/about-us-carousel-3.jpg" class="lightbox text-decoration-none">
+                    <span class="thumb-info custom-thumb-info-1">
+                        <span class="thumb-info-wrapper">
+                            <span class="thumb-info-plus"></span>
+                            <img src="~/about-us-carousel-3.jpg" class="img-fluid" alt="">
+                        </span>
+                    </span>
+                </a>
+            </div>
+            <div>
+                <a href="~/about-us-carousel-4.jpg" class="lightbox text-decoration-none">
+                    <span class="thumb-info custom-thumb-info-1">
+                        <span class="thumb-info-wrapper">
+                            <span class="thumb-info-plus"></span>
+                            <img src="~/about-us-carousel-4.jpg" class="img-fluid" alt="">
+                        </span>
+                    </span>
+                </a>
+            </div>
+            <div>
+                <a href="~/about-us-carousel-5.jpg" class="lightbox text-decoration-none">
+                    <span class="thumb-info custom-thumb-info-1">
+                        <span class="thumb-info-wrapper">
+                            <span class="thumb-info-plus"></span>
+                            <img src="~/about-us-carousel-5.jpg" class="img-fluid" alt="">
+                        </span>
+                    </span>
+                </a>
+            </div>
+            <!-- Diğer 4 resim (isteğe bağlı) -->
+        </div>
+    </div>
+
+    <!-- Statik bölümün resim yolları (~) ve linkleri (asp-) düzeltildi -->
+    <section class="section section-center section-no-border section-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-8 col-lg-4 appear-animation" data-appear-animation="fadeInUp" data-appear-animation-delay="0">
+                    <img src="@Url.Content("~/personal-trainer.png")" class="mb-2" alt />
+                    <h2 class="font-weight-bold text-color-quaternary">Trainers</h2>
+                    <p>Our elite team of certified trainers is your greatest asset. They bring passion, expertise, and personalized attention to every session, helping you break through plateaus and achieve results you never thought possible.</p>
+                    <a class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium" asp-controller="Trainers" asp-action="Index" title="Meet The Staff">Meet the Staff</a>
+                </div>
+                <div class="col-sm-8 col-lg-4 custom-sm-margin-1 appear-animation" data-appear-animation="fadeInUp" data-appear-animation-delay="300">
+                    <img src="@Url.Content("~/membership-card.png")" class="mb-2" alt />
+                    <h2 class="font-weight-bold text-color-quaternary">Become a Member</h2>
+                    <p>Unlock your potential with a membership. Gain access to our top-tier facilities, exclusive member benefits, and a motivating community that feels like family. Your best self is waiting.</p>
+                    <a class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium" asp-controller="Contact" asp-action="Index" title="Join Now">Join Now</a>
+                </div>
+                <div class="col-sm-8 col-lg-4 custom-sm-margin-1 appear-animation" data-appear-animation="fadeInUp" data-appear-animation-delay="600">
+                    <img src="@Url.Content("~/group-chat.png")" class="mb-2" alt />
+                    <h2 class="font-weight-bold text-color-quaternary">Group Fitness</h2>
+                    <p>Find your new favorite workout in our dynamic group fitness classes. From high-energy cardio to mindful yoga, our schedule has something for every mood and goal, all led by inspiring instructors.</p>
+                    <a class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium" asp-controller="Classes" asp-action="Index" title="Learn More">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+

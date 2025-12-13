@@ -1,0 +1,214 @@
+﻿@model SporSalonuProjesi.Models.BookingPageViewModel
+@{
+    ViewData["Title"] = "Book Appointment";
+}
+<section class="section section-height-3 bg-dark border-0 m-0">
+    <div class="container py-3">
+        <div class="row align-items-center justify-content-center text-center">
+            <div class="col-lg-8">
+                <h2 class="text-color-light font-weight-bold mb-0">Schedule Appointment</h2>
+                <p class="text-color-light opacity-7 mb-0">Start by choosing your trainer and class.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-4">
+            <h3 class="font-weight-bold mb-4">Appointment Details</h3>
+
+            <form id="bookingForm" class="custom-form-style-1">
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Select Trainer</label>
+                    <select id="trainer-select" class="form-control form-control-lg">
+                        <option value="">Please Select...</option>
+                        @foreach (var trainer in Model.Trainers)
+                        {
+                            <option value="@trainer.Id">@trainer.FullName</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Select Service</label>
+                    <select id="class-select" class="form-control form-control-lg">
+                        <option value="">Please Select...</option>
+                        @foreach (var gClass in Model.GymClasses)
+                        {
+                            <option value="@gClass.Id" data-price="@gClass.Fee">
+                                @gClass.Name (@gClass.DurationMinutes min)
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Select Date</label>
+
+                    <input type="date" id="date-picker" class="form-control form-control-lg" min="@DateTime.Today.ToString("yyyy-MM-dd")">
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg-8">
+            <h4 class="font-weight-bold mb-4">Available Times</h4>
+
+            <div id="loader" style="display: none; text-align: center; min-height: 100px;">
+                <div class="bounce-loader">
+                    <div class="bounce1"></div>
+                    <div class="bounce2"></div>
+                    <div class="bounce3"></div>
+                </div>
+            </div>
+
+            <div id="available-slots-container" class="d-flex flex-wrap">
+                <p class="text-muted">Please select all fields to see available times.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold">Confirm Appointment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body-content">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="btnConfirmBooking">Create Request</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            var selectedTrainer, selectedClass, selectedDate;
+
+            // 1. Basit 'change' event dinleyicisi
+            $("#trainer-select, #class-select, #date-picker").on("change", function() {
+                selectedTrainer = $("#trainer-select").val();
+                selectedClass = $("#class-select").val();
+                selectedDate = $("#date-picker").val();
+
+                if (selectedTrainer && selectedClass && selectedDate) {
+                    loadAvailableSlots();
+                } else {
+                    $("#available-slots-container").html('<p class="text-muted">Please select all fields to see available times.</p>');
+                }
+            });
+
+            // 2. Müsait Saatleri Yükle (AJAX)
+            function loadAvailableSlots() {
+                $("#loader").show();
+                $("#available-slots-container").hide();
+
+                $.ajax({
+                    url: '@Url.Action("GetAvailableSlots", "Appointment")',
+                    type: 'GET',
+                    data: {
+                        trainerId: selectedTrainer,
+                        gymClassId: selectedClass,
+                        date: selectedDate
+                    },
+                    success: function(slots) {
+                        $("#loader").hide();
+                        $("#available-slots-container").empty().show();
+
+                        // *** İSTEDİĞİNİZ HATA MESAJI KONTROLÜ BURADA ***
+                        // Controller { error: "..." } şeklinde bir mesaj gönderirse:
+                        if (slots.error) {
+                            $("#available-slots-container").html('<div class="alert alert-warning">' + slots.error + '</div>');
+                            return;
+                        }
+
+                        // Hiç slot bulunamazsa:
+                        if (slots.length === 0) {
+                            $("#available-slots-container").html('<div class="alert alert-warning">No available slots found for the selected date.</div>');
+                            return;
+                        }
+
+                        // Slotlar listelenir:
+                        slots.forEach(function(slot) {
+                            var buttonHtml = '<a href="#" class="btn btn-primary custom-btn-style-2 m-1 time-slot-btn" data-slot="' + slot + '">' + slot + '</a>';
+                            $("#available-slots-container").append(buttonHtml);
+                        });
+                    },
+                    error: function() {
+                        $("#loader").hide();
+                        $("#available-slots-container").html('<div class="alert alert-danger">An error occurred while loading the times.</div>');
+                    }
+                });
+            }
+
+            // 3. Modal Tıklama ve Onaylama (değişiklik yok, bu kısım doğruydu)
+            $("#available-slots-container").on("click", ".time-slot-btn", function(e) {
+                e.preventDefault();
+                var time = $(this).data("slot");
+                var trainerName = $("#trainer-select option:selected").text();
+                var selectedClassOption = $("#class-select option:selected");
+                var className = selectedClassOption.text();
+                var classPrice = selectedClassOption.data("price");
+
+                var formattedPrice = "N/A";
+                if (classPrice !== undefined && classPrice !== null) {
+                    formattedPrice = parseFloat(classPrice).toLocaleString('en-US', { style: 'currency', currency: 'TRY' });
+                }
+
+                $("#modal-body-content").html(
+                    '<p><strong>Trainer:</strong> ' + trainerName + '</p>' +
+                    '<p><strong>Service:</strong> ' + className + '</p>' +
+                    '<p><strong>Date:</strong> ' + selectedDate + ' ' + time + '</p>' +
+                    '<p><strong>Fee:</strong> ' + formattedPrice + '</p>' +
+                    '<hr><p class="text-muted mb-0">Are you sure you want to create this appointment request? Your request will be submitted for trainer approval.</p>'
+                );
+
+                $("#btnConfirmBooking").data("datetime", selectedDate + 'T' + time);
+                var modal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+                modal.show();
+            });
+
+            $("#btnConfirmBooking").on("click", function() {
+                var appointmentDateTime = $(this).data("datetime");
+                var requestData = {
+                    TrainerId: parseInt(selectedTrainer),
+                    GymClassId: parseInt(selectedClass),
+                    AppointmentDateTime: appointmentDateTime
+                };
+
+                $(this).prop('disabled', true).text('Processing...');
+
+                $.ajax({
+                    url: '@Url.Action("CreateAppointment", "Appointment")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(requestData),
+                    success: function(response) {
+                        bootstrap.Modal.getInstance(document.getElementById('confirmationModal')).hide();
+                        if (response.success) {
+                            alert(response.message);
+                            loadAvailableSlots(); // Randevudan sonra saatleri yenile
+                        } else {
+                            alert("Error: " + response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        if (xhr.status == 401) {
+                            alert("Please log in to book an appointment.");
+                            window.location.href = '/Identity/Account/Login?ReturnUrl=' + window.location.pathname;
+                        } else {
+                            alert("A server error occurred.");
+                        }
+                    },
+                    complete: function() {
+                        $("#btnConfirmBooking").prop('disabled', false).text('Create Request');
+                    }
+                });
+            });
+        });
+    </script>
+}

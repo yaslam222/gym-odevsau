@@ -1,0 +1,209 @@
+﻿
+@{
+    ViewData["Title"] = "Contact";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+}
+
+
+
+<div role="main" class="main">
+    <section class="section section-no-border section-light custom-padding-top-1 mb-0">
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-lg-9 mb-4 mb-lg-0">
+                    <h1 class="font-weight-bold text-color-primary mb-0">Contact Us</h1>
+                    <h4 class="font-weight-bold text-color-quaternary">Get in touch</h4>
+                    <p class="mb-5 pb-2">We're here to help you start your fitness journey. Whether you have questions about memberships, class schedules, or personal training, our team is ready to assist. Get in touch with us today via phone, email, or by stopping by the front desk.</p>
+
+                    <!-- Başarı mesajı (VIP Form) -->
+                    @if (TempData["VipSuccess"] != null)
+                    {
+                        <div class="alert alert-success">
+                            <strong>Success!</strong> @TempData["VipSuccess"]
+                        </div>
+                    }
+
+                    <div class="row">
+                        <div class="col-md-4 position-relative">
+                            <div class="custom-location">
+                                <img src="~/img/demos/gym/map/pin.png" alt class="img-fluid" />
+                                <h6 class="font-weight-bold text-color-quaternary text-5 mb-1">Los Angeles</h6>
+                                <p>
+                                    Porto Blvd, Suite 100<br>
+                                    Los Angeles/CA<br>
+                                    <strong>Phone:</strong> <a href="tel:+123456789" class="text-color-dark">123-456-7890</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 position-relative">
+                            <div class="custom-location">
+                                <img src="~/img/demos/gym/map/pin.png" alt class="img-fluid" />
+                                <h6 class="font-weight-bold text-color-quaternary text-5 mb-1">New York</h6>
+                                <p>
+                                    Porto Blvd, Suite 100<br>
+                                    New York/NY<br>
+                                    <strong>Phone:</strong> <a href="tel:+123456789" class="text-color-dark">123-456-7890</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <!-- 'Try us Out!' VIP FORMU -->
+                    <div class="custom-join-now-form custom-position-style-2 bg-color-primary p-4">
+                        <h4 class="font-weight-bold text-color-light mb-0">Try us Out!</h4>
+                        <p class="font-weight-light text-color-light text-2">Get a free 5 day VIP guest pass.</p>
+
+                        <!-- Formu HomeController -> VipRequest metoduna gönder -->
+                        <form asp-controller="VipRequest" asp-action="Submit" method="POST">
+                            <div class="row">
+                                <div class="form-group col">
+                                    <input type="text" value="" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="Name" placeholder="Your Name" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <input type="email" value="" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="Email" placeholder="Your E-mail" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <input type="text" value="" data-msg-required="Please enter your phone." maxlength="100" class="form-control" name="Phone" placeholder="Your Phone" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col mb-0">
+                                    <input type="submit" value="Join Now!" class="btn btn-quaternary custom-btn-style-2 font-weight-bold" data-loading-text="Loading...">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-quaternary section-text-light m-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7">
+                    <h2 class="font-weight-bold text-color-light">Send us a message</h2>
+
+                    <!-- Başarı mesajı (Contact Form) -->
+                    @if (TempData["ContactSuccess"] != null)
+                    {
+                        <div class="alert alert-success">
+                            <strong>Success!</strong> @TempData["ContactSuccess"]
+                        </div>
+                    }
+
+                    <!-- ANA İLETİŞİM FORMU -->
+                    <!-- Formu HomeController -> Contact (POST) metoduna gönder -->
+                    <form class_="contact-form custom-form-style-1" asp-controller="Contact" asp-action="Index" method="POST">
+
+                        <!-- Model hatalarını (eğer varsa) göster -->
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="row">
+                            <div class="form-group col-lg-4 col-sm-4 custom-xs-margin-3">
+                                <!-- 'name' attribute'leri C# modelindeki (ContactFormMessage) property isimleriyle eşleşmeli -->
+                                <input type="text" value="" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="Name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group col-lg-4 col-sm-4 custom-xs-margin-3">
+                                <input type="email" value="" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="Email" placeholder="Your E-mail" required>
+                            </div>
+                            <div class="form-group col-lg-4 col-sm-4">
+                                <input type="tel" value="" data-msg-required="Please enter your phone number" maxlength="100" class="form-control" name="Phone" placeholder="Your Phone" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col">
+                                <textarea maxlength="5000" data-msg-required="Please enter your message." rows="3" class="form-control" name="Message" placeholder="Your Message" required></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col">
+                                <input type="submit" value="Send Message" class="btn btn-primary font-weight-bold custom-btn-style-3 float-end btn-lg" data-loading-text="Loading...">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-5">
+                    <h2 class="font-weight-bold text-color-light mt-2">Why Us?</h2>
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6">
+                            <ul class="list list-icons list-light text-color-light">
+                                <li><i class="fas fa-check"></i> Fitness Consultation</li>
+                                <li><i class="fas fa-check"></i> Professionals</li>
+                                <li><i class="fas fa-check"></i> Zumba</li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6 col-sm-6">
+                            <ul class="list list-icons list-light text-color-light">
+                                <li><i class="fas fa-check"></i> Conditioning</li>
+                                <li><i class="fas fa-check"></i> Sports</li>
+                                <li><i class="fas fa-check"></i> Consultation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statik Kaynaklar (~/ yoluyla) -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 position-relative p-0">
+                <section class="resources section-background custom-wide-section custom-small-section-padding-2 custom-overlay-style-2" style="background: url('@Url.Content("resources.jpg")'); background-size: cover;">
+                    <h2 class="text-color-light font-weight-bold">Resources</h2>
+                    <div class="owl-carousel custom-dots-style-2 custom-dots-bottom-left-1" data-plugin-options="{'items': 1, 'loop': false, 'dots': true, 'nav': false}">
+                        <div class="custom-resources-style">
+                            <span class="number bg-color-primary text-color-light">1</span>
+                            <span class="content">
+                                <span class="title text-color-light">
+                                    How to get start
+                                </span>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut nisl nunc. Vestibulum.</p>
+                            </span>
+                        </div>
+                        <div class="custom-resources-style">
+                            <span class="number bg-color-primary text-color-light">2</span>
+                            <span class="content">
+                                <span class="title text-color-light">
+                                    How to get start
+                                </span>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut nisl nunc. Vestibulum.</p>
+                            </span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="col-lg-6 position-relative p-0">
+                <section class="working-hours section-background custom-wide-section custom-small-section-padding-2 custom-overlay-style-2" style="background: url('@Url.Content("~/Worktime.png")'); background-size: cover;">
+                    <br />
+                    <br />
+                    <ul class="custom-list-style-1 ps-0">
+                        <li>
+                            <span class="custom-list-item custom-spacing-1 text-color-light custom-font-weight-medium">Mon - Fri</span>
+                            <span class="custom-list-value custom-text-color-1">: 5.30am - 11.00pm</span>
+                        </li>
+                        <li>
+                            <span class="custom-list-item custom-spacing-1 text-color-light custom-font-weight-medium">Saturday</span>
+                            <span class="custom-list-value custom-text-color-1">: 5.30am - 1.00pm</span>
+                        </li>
+                        <li>
+                            <span class="custom-list-item custom-spacing-1 text-color-light custom-font-weight-medium">Sunday</span>
+                            <span class="custom-list-value custom-text-color-1">: Closed</span>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Maps - Go to the bottom of the page to change settings and map location. -->
+    <div id="googlemaps" class="google-map m-0" style="height: 425px;"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.6732986336624!2d30.348843275904496!3d40.74721377138831!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14ccb27a686f1d15%3A0xa7594271a4d1d216!2sKemalpa%C5%9Fa%2C%20%C3%9Cniversite%20Cd.%20No%3A33%2C%2054050%20Serdivan%2FSakarya!5e0!3m2!1sen!2str!4v1762120833055!5m2!1sen!2str" width="1550" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+</div>
+
+

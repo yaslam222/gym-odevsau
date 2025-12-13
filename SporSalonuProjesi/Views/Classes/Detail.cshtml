@@ -1,0 +1,187 @@
+﻿@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+}
+@model SporSalonuProjesi.Data.Entities.GymClass
+<div role="main" class="main">
+	<section class="section section-no-border section-light custom-padding-top-1 mb-0">
+		<div class="container">
+			<div class="row mt-4">
+
+				<!-- Ana içerik sütunu -->
+				<div class="col-md-7 col-lg-9">
+					<h1 class="font-weight-bold text-color-primary mb-0">@Model.Name</h1>
+					<h4 class="font-weight-bold text-color-quaternary">Our Classes</h4>
+					<p>@Model.Title</p>
+
+					<ul class="list list-icons list-primary mt-4">
+						<li><i class="fas fa-check"></i> <strong>Duration:</strong> @Model.DurationMinutes minutes</li>
+						<li><i class="fas fa-check"></i> <strong>Fee:</strong> @Model.Fee.ToString("C")</li>
+					</ul>
+
+					<p class="text-1">@Model.Description</p>
+
+					@if (TempData["VipSuccess"] != null)
+					{
+						<div class="alert alert-success mt-4">
+							<strong>Success!</strong> @TempData["VipSuccess"]
+						</div>
+					}
+				</div>
+
+				<!-- VIP Form Sütunu -->
+				<div class="col-md-5 col-lg-3">
+					<!--
+						DÜZELTME: "custom-position-style-1" sınıfı buradan kaldırıldı.
+						Form artık beyaz alanın içinde kalacak.
+					-->
+					<div class="custom-join-now-form bg-color-primary p-4">
+						<h4 class="font-weight-bold text-color-light mb-0">Try us Out!</h4>
+						<p class="font-weight-light text-color-light text-2">Get a free 5 day VIP guest pass.</p>
+
+						<form asp-controller="VipRequest" asp-action="Submit" method="POST">
+							<div class="row">
+								<div class="form-group col">
+									<input type="text" value="" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="Name" placeholder="Your Name" required>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col">
+									<input type="email" value="" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="Email" placeholder="Your E-mail" required>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col">
+									<input type="text" value="" data-msg-required="Please enter your phone." maxlength="100" class="form-control" name="Phone" placeholder="Your Phone" required>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col mb-0">
+									<input type="submit" value="Join Now!" class="btn btn-quaternary custom-btn-style-2 font-weight-bold" data-loading-text="Loading...">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+
+			</div> <!-- row mt-4 sonu -->
+		</div>
+	</section>
+
+	<!-- Galeri resim yolları (Bu yolların wwwroot altında olduğundan emin olmalısın) -->
+	<div id="itemDetailGallery" class="row custom-item-detail-gallery lightbox d-block p-0" data-plugin-options="{'delegate': 'a.lightbox', 'type': 'image', 'gallery': {'enabled': true}}">
+		<div class="col-12 col-md-5ths col-lg-5ths isotope-item p-0">
+			<a href="@Url.Content("~/class1.png")" class="lightbox text-decoration-none">
+				<span class="thumb-info custom-thumb-info-1">
+					<span class="thumb-info-wrapper">
+						<span class="thumb-info-plus"></span>
+						<img src="@Url.Content("~/class1.png")" class="img-fluid" alt="">
+					</span>
+				</span>
+			</a>
+		</div>
+		<div class="col-12 col-md-5ths col-lg-5ths isotope-item p-0">
+			<a href="@Url.Content("~/class10.png")" class="lightbox text-decoration-none">
+				<span class="thumb-info custom-thumb-info-1">
+					<span class="thumb-info-wrapper">
+						<span class="thumb-info-plus"></span>
+						<img src="@Url.Content("~/class10.png")" class="img-fluid" alt="">
+					</span>
+				</span>
+			</a>
+		</div>
+		<div class="col-12 col-md-5ths col-lg-5ths isotope-item p-0">
+			<a href="@Url.Content("~/class7.png")" class="lightbox text-decoration-none">
+				<span class="thumb-info custom-thumb-info-1">
+					<span class="thumb-info-wrapper">
+						<span class="thumb-info-plus"></span>
+						<img src="@Url.Content("~/class7.png")" class="img-fluid" alt="">
+					</span>
+				</span>
+			</a>
+		</div>
+		<div class="col-12 col-md-5ths col-lg-5ths isotope-item p-0">
+			<a href="@Url.Content("~/class4.png")" class="lightbox text-decoration-none">
+				<span class="thumb-info custom-thumb-info-1">
+					<span class="thumb-info-wrapper">
+						<span class="thumb-info-plus"></span>
+						<img src="@Url.Content("~/class4.png")" class="img-fluid" alt="">
+					</span>
+				</span>
+			</a>
+		</div>
+		<div class="col-12 col-md-5ths col-lg-5ths isotope-item p-0">
+			<a href="@Url.Content("~/class5.png")" class="lightbox text-decoration-none">
+				<span class="thumb-info custom-thumb-info-1">
+					<span class="thumb-info-wrapper">
+						<span class="thumb-info-plus"></span>
+						<img src="@Url.Content("~/class5.png")" class="img-fluid" alt="">
+					</span>
+				</span>
+			</a>
+		</div>
+		<div class="col-12 col-md-5ths col-lg-5ths isotope-item p-0">
+			<a href="@Url.Content("~/class6.png")" class="lightbox text-decoration-none">
+				<span class="thumb-info custom-thumb-info-1">
+					<span class="thumb-info-wrapper">
+						<span class="thumb-info-plus"></span>
+						<img src="@Url.Content("~/class6.png")" class="img-fluid" alt="">
+					</span>
+				</span>
+			</a>
+		</div>
+		<div class="col-12 col-md-5ths col-lg-5ths isotope-item p-0">
+			<a href="@Url.Content("~/class3.png")" class="lightbox text-decoration-none">
+				<span class="thumb-info custom-thumb-info-1">
+					<span class="thumb-info-wrapper">
+						<span class="thumb-info-plus"></span>
+						<img src="@Url.Content("~/class3.png")" class="img-fluid" alt="">
+					</span>
+				</span>
+			</a>
+		</div>
+		<div class="col-12 col-md-5ths col-lg-5ths isotope-item p-0">
+			<a href="@Url.Content("~/class8.png")" class="lightbox text-decoration-none">
+				<span class="thumb-info custom-thumb-info-1">
+					<span class="thumb-info-wrapper">
+						<span class="thumb-info-plus"></span>
+						<img src="@Url.Content("~/class8.png")" class="img-fluid" alt="">
+					</span>
+				</span>
+			</a>
+		</div>
+		<div class="col-12 col-md-5ths col-lg-5ths isotope-item p-0">
+			<a href="@Url.Content("~/class9.png")" class="lightbox text-decoration-none">
+				<span class="thumb-info custom-thumb-info-1">
+					<span class="thumb-info-wrapper">
+						<span class="thumb-info-plus"></span>
+						<img src="@Url.Content("~/class9.png")" class="img-fluid" alt="">
+					</span>
+				</span>
+			</a>
+		</div>
+		<div class="col-12 col-md-5ths col-lg-5ths isotope-item p-0">
+			<a href="@Url.Content("~/class2.png")" class="lightbox text-decoration-none">
+				<span class="thumb-info custom-thumb-info-1">
+					<span class="thumb-info-wrapper">
+						<span class="thumb-info-plus"></span>
+						<img src="@Url.Content("~/class2.png")" class="img-fluid" alt="">
+					</span>
+				</span>
+			</a>
+		</div>
+	</div>
+
+	<section class="section section-center section-no-border section-light">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-10">
+					<h2 class="font-weight-bold text-color-quaternary appear-animation" data-appear-animation="fadeInUp" data-appear-animation-delay="0"><span class="text-color-primary">Get Up!</span> Challenge yourself today</h2>
+					<p class="appear-animation" data-appear-animation="fadeInUp" data-appear-animation-delay="150">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed sem ipsum. Proin efficitur dolor accumsan purus varius tempus nec a nulla. Aliquam id vulputate massa, a rhuncus justo. Nunc luctus non ipsum a cursus. Donec laoreet iaculis egestas. Nulla finibus sed ipsum a pretium. Mauris ut nisl nec metus.</p>
+					<a class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium text-2 appear-animation" data-appear-animation="fadeInUp" data-appear-animation-delay="300" asp-controller="AboutUs" asp-action="Index">About the Gym</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+

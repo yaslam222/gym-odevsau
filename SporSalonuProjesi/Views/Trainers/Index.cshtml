@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+}
+
+@model List<SporSalonuProjesi.Data.Entities.Trainer>
+
+
+<div role="main" class="main">
+    <section class="section section-no-border section-light custom-padding-top-1 mb-0">
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col">
+                    <h1 class="font-weight-bold text-color-primary mb-0">Trainers</h1>
+                    <h4 class="font-weight-bold text-color-quaternary">Real Pros</h4>
+                    <p>Meet our certified experts: more than just trainers, they are dedicated partners committed to helping you reach your personal potential.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-quaternary section-center section-no-border m-0">
+        <div class="container">
+            <div class="row justify-content-center mb-4 mb-md-0 mb-lg-5">
+
+                <!-- DİNAMİK ALAN BAŞLANGICI -->
+                <!-- Statik kartlar yerine C# döngüsü kullanıyoruz -->
+                @foreach (var trainer in Model)
+                {
+                    <div class="col-md-6 pb-3 col-lg-3">
+                        <span class="thumb-info custom-thumb-info-2 thumb-info-hide-wrapper-bg">
+                            <span class="thumb-info-wrapper m-0">
+                                <!-- Resim yolu veritabanından geliyor -->
+                                <img src="@Url.Content(trainer.ProfileImageUrl)" class="img-fluid" alt="@trainer.FullName">
+                            </span>
+                            <span class="thumb-info-caption bg-color-light text-center p-5">
+                                <!-- İsim veritabanından geliyor -->
+                                <h4 class="font-weight-bold text-color-quaternary mb-3">@trainer.FullName</h4>
+                                <!-- Unvan veritabanından geliyor -->
+                                <p class="text-color-dark p-0">@trainer.Title</p>
+
+                                <!-- Dinamik Link: /Staff/Detail/1 (veya 2, 3...) -->
+                                <a class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium"
+                                   asp-controller="Trainers"
+                                   asp-action="Detail"
+                                   asp-route-id="@trainer.Id">View More</a>
+                            </span>
+                        </span>
+                    </div>
+                }
+                <!-- DİNAMİK ALAN BİTİŞİ -->
+
+            </div>
+        </div>
+    </section>
+</div>
+
+

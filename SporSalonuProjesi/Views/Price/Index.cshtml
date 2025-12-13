@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+}
+@model List<SporSalonuProjesi.Data.Entities.PricingPlan>
+
+
+<div role="main" class="main">
+    <section class="section section-no-border section-light custom-padding-top-1 mb-0">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="font-weight-bold text-color-primary mt-4 mb-0">Pricing</h1>
+                    <h4 class="font-weight-bold text-color-quaternary">The perfect plan for you</h4>
+                    <p>We offer a variety of flexible membership options tailored to fit your lifestyle and budget. From monthly plans to annual packages, find the perfect pricing structure that helps you commit to your fitness journey without compromise. Visit us for a tour to discuss the best plan for you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-quaternary section-center section-no-border m-0">
+        <div class="container">
+            <div class="row justify-content-center">
+
+                <!-- DİNAMİK ALAN BAŞLANGICI -->
+                <!-- Statik 3 kartı silip, SQL'den gelen her plan için bir döngü kuruyoruz -->
+                @foreach (var plan in Model)
+                {
+                    <div class="col-sm-9 col-md-7 col-lg-4 appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="0">
+                        <span class="thumb-info custom-thumb-info-2">
+                            <span class="thumb-info-caption bg-color-light text-center p-5">
+
+                                <!-- Başlık (Örn: Yearly) veritabanından -->
+                                <h4 class="font-weight-bold text-color-quaternary custom-font-style-1">@plan.Title</h4>
+
+                                <!-- Fiyat (Örn: $199) veritabanından -->
+                                <!-- "C0" formatı, ".00" olmadan para birimi olarak formatlar -->
+                                <span class="font-weight-bold text-color-primary custom-font-style-2">@plan.PricePerMonth.ToString("C0") / month</span>
+
+                                <!-- Özellikler veritabanından -->
+                                <ul class="list custom-pricing-list list-primary list-borders">
+                                    @if (!string.IsNullOrEmpty(plan.Features))
+                                    {
+                                        // "Unlimited Use,Yoga Classes" string'ini ',' den ayır
+                                        foreach (var feature in plan.Features.Split(','))
+                                        {
+                                            <li>@feature.Trim()</li>
+                                        }
+                                    }
+                                </ul>
+
+                                <a class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium"
+                                   asp-area="Identity" asp-page="/Account/Register"
+                                   title="Join Now">Join Now</a>
+                            </span>
+                        </span>
+                    </div>
+                }
+                <!-- DİNAMİK ALAN BİTİŞİ -->
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Sayfanın altındaki statik bölüm (Linkleri güncellendi) -->
+    <section class="section section-center section-no-border section-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-8 col-lg-4 appear-animation" data-appear-animation="fadeInUp" data-appear-animation-delay="0">
+                    <img src="@Url.Content("~/personal-trainer.png")" class="mb-2" alt />
+                    <h2 class="font-weight-bold text-color-quaternary">Trainers</h2>
+                    <p>Our elite team of certified trainers is your greatest asset. They bring passion, expertise, and personalized attention to every session, helping you break through plateaus and achieve results you never thought possible.</p>
+                    <a class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium" asp-controller="Trainers" asp-action="Index" title="Meet The Staff">Meet the Staff</a>
+                </div>
+                <div class="col-sm-8 col-lg-4 custom-sm-margin-1 appear-animation" data-appear-animation="fadeInUp" data-appear-animation-delay="300">
+                    <img src="@Url.Content("~/membership-card.png")" class="mb-2" alt />
+                    <h2 class="font-weight-bold text-color-quaternary">Become a Member</h2>
+                    <p>Unlock your potential with a membership. Gain access to our top-tier facilities, exclusive member benefits, and a motivating community that feels like family. Your best self is waiting.</p>
+                    <a class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium" asp-controller="Contact" asp-action="Index" title="Join Now">Join Now</a>
+                </div>
+                <div class="col-sm-8 col-lg-4 custom-sm-margin-1 appear-animation" data-appear-animation="fadeInUp" data-appear-animation-delay="600">
+                    <img src="@Url.Content("~/group-chat.png")" class="mb-2" alt />
+                    <h2 class="font-weight-bold text-color-quaternary">Group Fitness</h2>
+                    <p>Find your new favorite workout in our dynamic group fitness classes. From high-energy cardio to mindful yoga, our schedule has something for every mood and goal, all led by inspiring instructors.</p>
+                    <a class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium" asp-controller="Classes" asp-action="Index" title="Learn More">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+

@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+}
+
+
+
+<div class="container py-5">
+    <h2 class="font-weight-bold mb-4">Kişisel Egzersiz ve Diyet Planı Alın</h2>
+    <p class="mb-4">Bilgilerinizi girin, yapay zeka sizin için bir plan oluştursun.</p>
+    <p class="alert alert-info">
+        <strong>Not:</strong> Bu özellik %100 ücretsiz bir yapay zeka modeli kullanır.
+        Modelin "ısınması" 30 saniye kadar sürebilir. Lütfen sabırla bekleyiniz.
+    </p>
+
+    <div class="row">
+        <div class="col-md-8">
+            <form id="recommendationForm">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label font-weight-bold">Vücut Tipiniz</label>
+                        <select id="bodyType" class="form-control form-control-lg" required>
+                            <option value="">Seçiniz...</option>
+                            <option value="Ectomorph">Ektomorf (Zor kilo alan)</option>
+                            <option value="Mesomorph">Mezomorf (Atletik)</option>
+                            <option value="Endomorph">Endomorf (Kolay kilo alan)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label font-weight-bold">Hedefiniz</label>
+                        <select id="fitnessGoal" class="form-control form-control-lg" required>
+                            <option value="">Seçiniz...</option>
+                            <option value="Lose Weight">Kilo Vermek</option>
+                            <option value="Build Muscle">Kas Yapmak</option>
+                            <option value="Improve General Health">Genel Sağlığı İyileştirmek</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label font-weight-bold">Boy (cm)</label>
+                        <input type="number" id="height" class="form-control form-control-lg" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label font-weight-bold">Kilo (kg)</label>
+                        <input type="number" id="weight" class="form-control form-control-lg" required>
+                    </div>
+                </div>
+
+                <button type="submit" id="btnGetPlan" class="btn btn-primary btn-lg mt-3">
+                    <i class="fas fa-magic me-2"></i> Planımı Oluştur
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <div id="resultArea" style="display:none;">
+        <h3 class="font-weight-bold">İşte Yapay Zekanın Önerisi:</h3>
+        <div id="loadingSpinner" class="text-center my-4" style="display:none;">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Yükleniyor...</span>
+            </div>
+            <p class="mt-2">Model yükleniyor, lütfen bekleyin...</p>
+        </div>
+        <div id="planResult" class="p-4" style="background-color: #f5f5f5; border-radius: 8px;">
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $("#recommendationForm").on("submit", function(e) {
+                e.preventDefault();
+
+                // DÜZELTME: Arayüze göre parametreler güncellendi
+                var height = $("#height").val();
+                var weight = $("#weight").val();
+                var bodyType = $("#bodyType").val();
+                var fitnessGoal = $("#fitnessGoal").val();
+
+                $("#resultArea").show();
+                $("#loadingSpinner").show();
+                $("#planResult").hide();
+                $("#btnGetPlan").prop("disabled", true).text("Oluşturuluyor...");
+
+                $.ajax({
+                    url: '@Url.Action("GetPlan", "ai")',
+                    type: 'POST',
+                    // DÜZELTME: Gönderilen veri objesi güncellendi
+                    data: {
+                        height: height,
+                        weight: weight,
+                        bodyType: bodyType,
+                        fitnessGoal: fitnessGoal
+                    },
+                    success: function(response) {
+                        $("#loadingSpinner").hide();
+                        $("#btnGetPlan").prop("disabled", false).text("Planımı Oluştur");
+
+                        if (response.success) {
+                            // DÜZELTME: Dönen metin (plan) HTML içerdiği için .html() kullan
+                            // (Not: Dönen planı HTML'e çevirmek için bir Markdown kütüphanesi (örn: Showdown)
+                            // eklerseniz daha da güzel görünür, ama şimdilik .html() yeterli)
+                            $("#planResult").html(response.plan.replace(/\n/g, '<br>')).show();
+                        } else {
+                            $("#planResult").text("Hata: " + response.message).show();
+                        }
+                    },
+                    error: function(xhr) {
+                        $("#loadingSpinner").hide();
+                        $("#btnGetPlan").prop("disabled", false).text("Planımı Oluştur");
+
+                        var errorMsg = "Bir hata oluştu.";
+                        if(xhr.status == 401) {
+                            errorMsg = "Bu özelliği kullanmak için giriş yapmalısınız.";
+                        }
+                        $("#planResult").text(errorMsg).show();
+                    }
+                });
+            });
+        });
+    </script>
+}
+

@@ -1,0 +1,89 @@
+﻿@model List<SporSalonuProjesi.Models.MyBookingViewModel>
+@using SporSalonuProjesi.Data.Entities // <-- ENUM İÇİN BU SATIR KALIYOR
+@{
+    ViewData["Title"] = "My Appointments";
+}
+
+<section class="section section-height-3 bg-dark border-0 m-0">
+    </section>
+
+<div class="container py-5 my-3">
+
+    @if (Model == null || !Model.Any())
+    {
+        }
+    else
+    {
+            <div class="accordion accordion-modern-status" id="myBookingsAccordion">
+
+                @foreach (var app in Model)
+                {
+                        var collapseId = $"collapse-{app.Id}";
+                        var headingId = $"heading-{app.Id}";
+                        string cardClass = app.Status == BookingStatus.Rejected ? "border-danger" : "";
+                    
+
+                        <div class="card card-default mb-2 shadow-sm border-0 @cardClass">
+                            <div class="card-header" id="@headingId">
+                                <h4 class="card-title m-0">
+
+                                    <a class="accordion-toggle d-flex align-items-center text-decoration-none @(app.Status == BookingStatus.Approved ? "" : "collapsed")"
+                                       data-bs-toggle="collapse"
+                                       data-bs-target="#@collapseId"
+                                       role="button"
+                                       aria-expanded="@(app.Status == BookingStatus.Approved).ToString().ToLower()"
+                                       aria-controls="@collapseId">
+
+                                        <span class="text-color-dark font-weight-bold">@app.AppointmentDateTime.ToString("dd MMMM yyyy, dddd - HH:mm")</span>
+
+                                        @if (app.Status == BookingStatus.Approved)
+                                        {
+                                                <span class="badge bg-success rounded-pill px-3 py-2 ms-auto me-3">Approved</span>
+                                        }
+                                        else if (app.Status == BookingStatus.Pending)
+                                        {
+                                                <span class="badge bg-warning text-dark rounded-pill px-3 py-2 ms-auto me-3">Pending Approval</span>
+                                        }
+                                        else // Rejected
+                                        {
+                                                <span class="badge bg-danger rounded-pill px-3 py-2 ms-auto me-3">Rejected</span>
+                                        }
+                                        </a>
+                                </h4>
+                            </div>
+
+                            <div id="@collapseId" class="collapse @(app.Status == BookingStatus.Approved ? "show" : "")"
+                                 aria-labelledby="@headingId"
+                                 data-bs-parent="#myBookingsAccordion">
+                                <div class="card-body">
+                                    <ul class="list list-icons list-icons-style-2">
+                                        <li><i class="fas fa-user-tie text-color-primary"></i> <strong>Trainer:</strong> @app.TrainerName</li>
+                                        <li><i class="fas fa-dumbbell text-color-primary"></i> <strong>Service:</strong> @app.ClassName</li>
+                                        <li><i class="far fa-clock text-color-primary"></i> <strong>Duration:</strong> @app.DurationMinutes minutes</li>
+                                        <li><i class="fas fa-dollar-sign text-color-primary"></i> <strong>Fee:</strong> @app.Fee.ToString("C")</li>
+                                                    </ul>    @if (app.Status == BookingStatus.Pending)
+                                            {
+                                                        <div class="alert alert-warning mb-0 mt-3">
+                                                                                    This appointment request was send to the trainer.We gonna notify you when it's approved or rejected .
+                                                        </div>
+                                            }
+                                                 @if (app.Status == BookingStatus.Approved)
+                                            {
+                                                        <div class="alert alert-success mb-0 mt-3">
+                                                            This appointment request was Approved by the trainer.
+                                                        </div>
+                                            }
+                                    @if (app.Status == BookingStatus.Rejected)
+                                    {
+                                            <div class="alert alert-danger mb-0 mt-3">
+                                                This appointment request was rejected by the trainer.
+                                            </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                }
+
+            </div>
+    }
+</div>

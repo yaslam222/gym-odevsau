@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_SiteLayout.cshtml";
+}
+
+@model List<SporSalonuProjesi.Data.Entities.GymClass>
+
+<div role="main" class="main">
+    <section class="section section-no-border section-light custom-padding-top-1 mb-0">
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col">
+                    <h1 class="font-weight-bold text-color-primary mb-0">Classes</h1>
+                    <h4 class="font-weight-bold text-color-quaternary">One is for you</h4>
+                    <p>Discover the power of community in our diverse group fitness classes. Whether you want to build strength in boot camp, find your flow in yoga, or sweat it out in a high-intensity cycling session, our schedule is packed with options for every fitness level and interest.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-quaternary section-center section-no-border m-0">
+        <div class="container">
+            <div class="row justify-content-center">
+
+                <!-- DİNAMİK ALAN BAŞLANGICI -->
+                <!--
+                    Statik 6 kartı sildik.
+                    Yerine veritabanından gelen her bir 'item' için bu kart yapısını
+                    otomatik oluşturan bir döngü kurduk.
+                -->
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-8 col-lg-4 custom-sm-margin-2 mb-4">
+                        <span class="thumb-info custom-thumb-info-2 thumb-info-hide-wrapper-bg">
+                            <span class="thumb-info-wrapper m-0">
+                                <!-- Resim Yolu Dinamik (SQL'den) -->
+                                <img src="@Url.Content(item.ImageUrl)" class="img-fluid" alt="@item.Name">
+                            </span>
+                            <span class="thumb-info-caption bg-color-light text-center p-5">
+                                <!-- Başlık Dinamik (SQL'den) -->
+                                <h4 class="font-weight-bold text-color-quaternary mb-3">@item.Name</h4>
+                                <!-- Açıklama Dinamik (SQL'den) -->
+                                <p class="text-color-dark p-0">@item.Title</p>
+
+                                <!-- Dinamik Link: /Classes/Detail/1 (veya 2, 3...) -->
+                                <a class="btn btn-primary custom-btn-style-1 text-uppercase text-color-light custom-font-weight-medium"
+                                   asp-controller="Classes"
+                                   asp-action="Detail"
+                                   asp-route-id="@item.Id"
+                                   title="Learn More">Learn More</a>
+                            </span>
+                        </span>
+                    </div>
+                }
+                <!-- DİNAMİK ALAN BİTİŞİ -->
+
+            </div>
+        </div>
+    </section>
+</div>
+
