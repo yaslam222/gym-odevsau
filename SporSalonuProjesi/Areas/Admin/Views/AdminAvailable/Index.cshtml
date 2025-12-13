@@ -1,0 +1,58 @@
+﻿@using SporSalonuProjesi.Data.Entities
+@using System.Linq
+@model IEnumerable<IGrouping<Trainer, TrainerAvailability>>
+
+@{
+    ViewData["Title"] = "Trainer Availability";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h5>Trainer Availability Planning</h5>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Add New Availability</a>
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th style="width: 25%;">Trainer</th>
+            <th>Available Times & Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    <tbody>
+        @foreach (var trainerGroup in Model)
+        {
+            <tr>
+                <td style="vertical-align: top; padding-top: 15px;">
+                    <strong>@trainerGroup.Key?.FullName</strong>
+                </td>
+
+                <td>
+                    @foreach (var item in trainerGroup)
+                    {
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; padding: 8px 5px;">
+
+                            <div>
+                                <strong>@item.Day</strong>
+                                <span style="margin-left: 15px; color: #555;">
+                                    @item.StartTime.ToString(@"hh\:mm") - @item.EndTime.ToString(@"hh\:mm")
+                                </span>
+                            </div>
+
+                            <div>
+                                <a asp-action="Edit" asp-controller="AdminAvailable" asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-outline-primary" style="margin-right: 5px;">Edit</a>
+
+                                <a asp-action="Delete" asp-controller="AdminAvailable" asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-outline-danger">Delete</a>
+                            </div>
+                        </div>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
