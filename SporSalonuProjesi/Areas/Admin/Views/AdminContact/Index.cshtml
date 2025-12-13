@@ -1,0 +1,42 @@
+﻿@using SporSalonuProjesi.Data.Entities
+@model List<ContactFormMessage>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    int counter = 1;
+}
+<h5>Messages</h5>
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Message</th>
+        <th>Date</th>
+        <th>Delete</th>
+    
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@counter</td>
+            <td>@item.Name</td>
+            <td>@item.Email</td>
+            <td>@item.Phone</td>
+            <td>@item.Message</td>
+            <td>@item.SubmittedAt</td>
+          
+            <td>
+                <a asp-area="Admin" asp-action="Delete" asp-controller="AdminContact" asp-route-id="@item.Id" class="btn mb-1 btn-rounded btn-outline-danger">Delete</a>
+              
+            </td>
+         
+
+        </tr>
+        counter++;
+    }
+
+</table>
+

@@ -1,0 +1,46 @@
+﻿@using SporSalonuProjesi.Data.Entities
+@model List<PricingPlan>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    int counter = 1;
+}
+
+<h5>Price</h5>
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>Price By Month</th>
+        <th>Features</th>
+        <th>Delete</th>
+        <th>Edit</th>
+
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@counter</td>
+            <td>@item.Title</td>
+            <td>@item.PricePerMonth</td>
+            <td>@item.Features</td>
+
+            <td>
+                <a asp-area="Admin" asp-action="Delete" asp-controller="AdminPrice" asp-route-id="@item.Id" class="btn mb-1 btn-rounded btn-outline-danger">Delete</a>
+
+            </td>
+            <td>
+                <a asp-area="Admin" asp-action="Edit" asp-controller="AdminPrice" asp-route-id="@item.Id" class="btn mb-1 btn-rounded btn-outline-primary">Edit</a>
+
+            </td>
+
+
+        </tr>
+        counter++;
+    }
+
+</table>
+
+<a asp-area="Admin" asp-action="Create" asp-controller="AdminPrice" class="btn btn-info">Create New Price Plane</a>
+
