@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SporSalonuProjesi.Data.Entities
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    var user = await UserManager.GetUserAsync(User);
+    <div class="d-flex align-items-center">
+        <a id="manage" class="nav-link text-light me-3" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+            Merhaba, @user?.FullName!
+        </a>
+        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button id="logout" type="submit" class="btn btn-primary btn-join-now text-uppercase custom-font-weight-medium">Logout</button>
+        </form>
+    </div>
+}
+else
+{
+    <div class="d-flex align-items-center">
+        <a class="nav-link text-light" id="register" asp-area="Identity" asp-page="/Account/Register" style="padding-right: 10px; padding-left: 10px;">Register</a>
+        <a class="btn btn-primary btn-join-now text-uppercase custom-font-weight-medium" id="login" asp-area="Identity" asp-page="/Account/Login">Join Now / Login</a>
+    </div>
+}

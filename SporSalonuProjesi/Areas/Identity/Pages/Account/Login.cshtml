@@ -1,0 +1,57 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div role="main" class="main">
+    <section class="section section-no-border section-light custom-padding-top-1 mb-0">
+        <div class="container" style="min-height: 500px;">
+            <div class="row mt-4">
+                <div class="col-lg-6 offset-lg-3">
+
+                    <h1 class="font-weight-bold text-color-primary mb-2">@ViewData["Title"]</h1>
+                    <p>Giriş yapmak için hesabınızı kullanın.</p>
+                    <hr />
+
+                    <form id="account" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.Email" class="form-label text-color-dark"></label>
+                            <input asp-for="Input.Email" class="form-control form-control-lg" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.Password" class="form-label text-color-dark"></label>
+                            <input asp-for="Input.Password" class="form-control form-control-lg" autocomplete="current-password" aria-required="true" placeholder="password" />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                            <label class="form-check-label" asp-for="Input.RememberMe"></label>
+                        </div>
+
+                        <div>
+                            <button id="login-submit" type="submit" class="btn btn-primary btn-lg w-100 text-uppercase custom-font-weight-medium">Giriş Yap</button>
+                        </div>
+
+                        <div class="mt-4 text-center">
+                         
+                            <p>
+                                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Yeni bir hesap oluştur</a>
+                            </p>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
